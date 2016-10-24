@@ -7,14 +7,13 @@
       * current.build.defines.csc - framework-specific build defines for C# compiler
  -->
  
-	 <include buildfile="${spring.basedir}/CopyLibToBinHelpers.include"/>
+    <include buildfile="${spring.basedir}/CopyLibToBinHelpers.include"/>
  
 	<target name="build">
 
 		<call target="copycommonlogginglibtobin" />
 		<call target="copynh3libtobin" />
 
-		<!-- build Spring.Data.NHibernate3 -->
 		<csc target="library" define="${current.build.defines.csc}"
 			 warnaserror="true"
 			 optimize="${build.optimize}"

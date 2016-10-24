@@ -111,6 +111,7 @@ Commandline Examples:
   <property name="spring.basedir" value="${project::get-base-directory()}"/>
   <property name="spring.nonredistdir" value="${spring.basedir}\..\..\nonredist"/>
   <property name="tool.dir" value="${project::get-base-directory()}\build-support\tools"/>
+  <property name="nuget.exe" value="${tool.dir}\NuGet\NuGet.exe"/>
   
   <!--Support for Windows XP in other languages. In Portuguese, for example, is "c:\Arquivos de Programs"-->
   <property name="programfiles" value="C:\Program Files"/>
@@ -319,77 +320,77 @@ Commandline Examples:
 
   <target name="restore-nuget-packages" description="Restores NuGet packages that solution(s) reference">
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore Spring.NET.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.Calculator\Spring.Calculator.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.CodeConfig.Migration\Spring.CodeConfig.Migration.2010.sln"
 	  workingdir="."
 	  failonerror="true" />
 	  <exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.Data.NHibernate.Northwind\Spring.Northwind.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.DataQuickStart\Spring.DataQuickStart.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.IoCQuickStart.MovieFinder\Spring.IocQuickStart.MovieFinder.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.MsmqQuickStart\Spring.MsmqQuickStart.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />	  
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.Mvc3QuickStart\Spring.Mvc3QuickStart.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.Mvc4QuickStart\Spring.Mvc4QuickStart.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.Mvc5QuickStart\Spring.Mvc5QuickStart.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	<exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.NmsQuickStart\Spring.NmsQuickStart.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	 <exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.Scheduling.Quartz.Example\Spring.Scheduling.Quartz.Example.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	 <exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.TxQuickStart\Spring.TxQuickStart.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	 <exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\Spring.WebQuickStart\Spring.WebQuickStart.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
 	  <exec 
-	  program=".nuget\nuget.exe"
+	  program="${nuget.exe}"
 	  commandline="restore ${spring.basedir}\examples\Spring\SpringAir\SpringAir.2010.sln" 
 	  workingdir="."
 	  failonerror="true" />
@@ -495,23 +496,21 @@ Commandline Examples:
     <property name="iesi4.lib.dir" value="${spring.basedir}/packages/Iesi.Collections.4.0.1.4000/lib/Net40"/>
     <property name="quartz2.lib.dir" value="${spring.basedir}/packages/Quartz.2.3.1/lib/net35"/>
 	<property name="nunit.lib.dir" value="${spring.basedir}/packages/NUnit.2.6.3/lib"/>
-	
+	<property name="nunit3.lib.dir" value="${spring.basedir}/packages/NUnit.3.5.0/lib/net35"/>
 	
 	<property name="common.logging.lib.dir" value="${spring.basedir}/packages/Common.Logging.3.0.0/lib/net35"/>
 	<property name="common.logging.core.lib.dir" value="${spring.basedir}/packages/Common.Logging.Core.3.0.0/lib/net35"/>
 	
+	<!-- we use same libs for both 4.0 and 4.5 builds -->
 	<if test="${nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5'}">
 		<property name="common.logging.lib.dir" value="${spring.basedir}/packages/Common.Logging.3.0.0/lib/net40"/>
 		<property name="common.logging.core.lib.dir" value="${spring.basedir}/packages/Common.Logging.Core.3.0.0/lib/net40"/>
-	</if>
-	
-	<!-- we use same libs for both 4.0 and 4.5 builds -->
-	<if test="${nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5'}">
 		<property name="lib.dir" value="${spring.basedir}/lib/net/4.0"/>
+        <property name="nunit3.lib.dir" value="${spring.basedir}/packages/NUnit.3.5.0/lib/net40"/>
 		<property name="quartz2.lib.dir" value="${spring.basedir}/packages/Quartz.2.3.1/lib/net40"/>
 	</if>
 	
-	
+
 	<call target="copylibtobin"/>
 
     <!-- build assemblies -->
@@ -529,6 +528,7 @@ Commandline Examples:
 
     <nant buildfile="src/Spring/Spring.Services/Spring.Services.build" target="build" if="${build-services}"/>
     <nant buildfile="src/Spring/Spring.Testing.NUnit/Spring.Testing.NUnit.build" target="build" if="${build-testing-nunit}"/>
+    <nant buildfile="src/Spring/Spring.Testing.NUnit3/Spring.Testing.NUnit3.build" target="build" if="${build-testing-nunit}"/>
     <nant buildfile="src/Spring/Spring.Testing.Microsoft/Spring.Testing.Microsoft.build" target="build" if="${build-testing-microsoft}"/>
     <nant buildfile="src/Spring/Spring.Messaging.Ems/Spring.Messaging.Ems.build" target="build" if="${build-ems and (nant.settings.currentframework == 'net-3.5' or nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5' )}"/>
     <nant buildfile="src/Spring/Spring.Messaging.Nms/Spring.Messaging.Nms.build" target="build" if="${build-nms}"/>
@@ -548,16 +548,17 @@ Commandline Examples:
     
     <nant buildfile="test/Spring/Spring.Data.NHibernate3.Tests/Spring.Data.NHibernate3.Tests.build" target="test" if="${build-data}"/>
     <nant buildfile="test/Spring/Spring.Data.NHibernate3.Integration.Tests/Spring.Data.NHibernate3.Integration.Tests.build" target="test" if="${build-data}"/>
-    <nant buildfile="test/Spring/Spring.Data.NHibernate4.Tests/Spring.Data.NHibernate4.Tests.build" target="test" if="${build-data}"/>
+    <nant buildfile="test/Spring/Spring.Data.NHibernate4.Tests/Spring.Data.NHibernate4.Tests.build" target="test" if="${build-data and (nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5')}"/>
     <nant buildfile="test/Spring/Spring.Data.NHibernate4.Integration.Tests/Spring.Data.NHibernate4.Integration.Tests.build" target="test" if="${build-data and (nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5' )}"/>
     <nant buildfile="test/Spring/Spring.Data.NHibernate4.NestedTxSuspension.Integration.Tests/Spring.Data.NHibernate4.NestedTxSuspension.Integration.Tests.build" target="test" if="${build-data and (nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5' )}"/>
 	
-    <nant buildfile="test/Spring/Spring.Services.Tests/Spring.Services.Tests.build" target="test" if="${build-services}"/>
+    <nant buildfile="test/Spring/Spring.Services.Tests/Spring.Services.Tests.build" target="test" if="${build-services and nant.settings.currentframework != 'net-3.5'}"/>
     <nant buildfile="test/Spring/Spring.Web.Tests/Spring.Web.Tests.build" target="test" if="${build-web}"/>
 	<nant buildfile="test/Spring/Spring.Web.Mvc3.Tests/Spring.Web.Mvc3.Tests.build" target="test" if="${build-web and nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5'}"/>
 	<nant buildfile="test/Spring/Spring.Web.Mvc4.Tests/Spring.Web.Mvc4.Tests.build" target="test" if="${build-web and nant.settings.currentframework == 'net-4.0' or nant.settings.currentframework == 'net-4.5'}"/>
 	<nant buildfile="test/Spring/Spring.Web.Mvc5.Tests/Spring.Web.Mvc5.Tests.build" target="test" if="${build-web and nant.settings.currentframework == 'net-4.5'}"/>
     <nant buildfile="test/Spring/Spring.Testing.NUnit.Tests/Spring.Testing.NUnit.Tests.build" target="test" if="${build-testing-nunit}"/>
+    <nant buildfile="test/Spring/Spring.Testing.NUnit3.Tests/Spring.Testing.NUnit3.Tests.build" target="test" if="${build-testing-nunit}"/>
     <nant buildfile="test/Spring/Spring.Testing.Microsoft.Tests/Spring.Testing.Microsoft.Tests.build" target="test" if="${run-testing-microsoft and build-testing-microsoft}"/>
     <nant buildfile="test/Spring/Spring.Messaging.Ems.Tests/Spring.Messaging.Ems.Tests.build" target="test" if="${build-ems}"/>
     <nant buildfile="test/Spring/Spring.Messaging.Ems.Integration.Tests/Spring.Messaging.Ems.Integration.Tests.build" target="test" if="${build-ems}"/>
@@ -730,7 +731,7 @@ Commandline Examples:
     </copy>
     <!-- copy nuget libs -->
     <copy todir="${current.bin.dir}" verbose="${copy-verbose}">
-      <fileset basedir="${nunit.lib.dir}">
+      <fileset basedir="${nunit3.lib.dir}">
         <include name="*.dll"/>
         <include name="*.xml"/>
       </fileset>
@@ -872,6 +873,8 @@ Commandline Examples:
         <delete dir="src/Spring/Spring.Template.Velocity/bin" failonerror="false"/>
         <delete dir="src/Spring/Spring.Testing.NUnit/obj" failonerror="false"/>
         <delete dir="src/Spring/Spring.Testing.NUnit/bin" failonerror="false"/>
+        <delete dir="src/Spring/Spring.Testing.NUnit3/obj" failonerror="false"/>
+        <delete dir="src/Spring/Spring.Testing.NUnit3/bin" failonerror="false"/>
         <delete dir="src/Spring/Spring.Testing.Microsoft/obj" failonerror="false"/>
         <delete dir="src/Spring/Spring.Testing.Microsoft/bin" failonerror="false"/>
         <delete dir="src/Spring/Spring.Web/obj" failonerror="false"/>
@@ -938,6 +941,8 @@ Commandline Examples:
         <delete dir="test/Spring/Spring.Testing.Microsoft.Tests/bin" failonerror="false"/>
         <delete dir="test/Spring/Spring.Testing.NUnit.Tests/obj" failonerror="false"/>
         <delete dir="test/Spring/Spring.Testing.NUnit.Tests/bin" failonerror="false"/>
+        <delete dir="test/Spring/Spring.Testing.NUnit3.Tests/obj" failonerror="false"/>
+        <delete dir="test/Spring/Spring.Testing.NUnit3.Tests/bin" failonerror="false"/>
         
         <delete failonerror="false">
           <fileset basedir="test/Spring/Spring.Web.Conversation.NHibernate3.Tests/Data/Spring/ConversationWA/WebConversationStateTest/Bin">
@@ -1596,6 +1601,10 @@ Commandline Examples:
           <include name="*/*/Spring.Testing.NUnit.xml"/>
           <include name="*/*/Spring.Testing.NUnit.pdb"/>
 
+          <include name="*/*/Spring.Testing.NUnit3.dll"/>
+          <include name="*/*/Spring.Testing.NUnit3.xml"/>
+          <include name="*/*/Spring.Testing.NUnit3.pdb"/>
+
           <include name="*/*/Spring.Testing.Microsoft.dll"/>
           <include name="*/*/Spring.Testing.Microsoft.xml"/>
           <include name="*/*/Spring.Testing.Microsoft.pdb"/>
@@ -1854,6 +1863,7 @@ Commandline Examples:
       <include name="src/Spring/Spring.Scheduling.Quartz2/**"/>
       <include name="src/Spring/Spring.Template.Velocity/**"/>
       <include name="src/Spring/Spring.Testing.NUnit/**"/>
+      <include name="src/Spring/Spring.Testing.NUnit3/**"/>
       <include name="src/Spring/Spring.Testing.Microsoft/**"/>
       <include name="src/Spring/CommonAssemblyInfo.cs"/>
       <include name="src/Spring/Spring.Web.Conversation.NHibernate3/**"/>
@@ -1880,6 +1890,7 @@ Commandline Examples:
       <include name="test/Spring/Spring.Scheduling.Quartz2.Tests/**"/>
       <include name="test/Spring/Spring.Template.Velocity.Tests/**"/>
       <include name="test/Spring/Spring.Testing.NUnit.Tests/**"/>
+      <include name="test/Spring/Spring.Testing.NUnit3.Tests/**"/>
       <include name="test/Spring/Spring.Testing.Microsoft.Tests/**"/>
       <include name="test/Spring/CommonAssemblyInfo.cs"/>
       <include name="test/Spring/Spring.Web.Conversation.NHibernate3.Tests/**"/>

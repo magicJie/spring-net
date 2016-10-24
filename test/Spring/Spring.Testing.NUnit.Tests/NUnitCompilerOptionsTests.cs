@@ -34,7 +34,11 @@ namespace Spring
     [TestFixture]
     public sealed class NUnitCompilerOptionTests : CompilerOptionsTests
     {
+#if NUNIT_3
+        [OneTimeSetUp]
+#else
         [TestFixtureSetUp]
+#endif
         public void FixtureSetUp()
         {
             AssemblyToCheck = Assembly.GetAssembly(typeof (AbstractSpringContextTests));

@@ -52,7 +52,7 @@
 				<include name="${current.bin.dir}/Spring.Testing.NUnit.dll" />
 				<include name="${current.bin.dir}/NHibernate.dll"/>
 				<include name="${current.bin.dir}/Iesi.Collections.dll"/>
-				<include name="${current.bin.dir}/nunit.framework.dll"/>
+				<include name="${nunit3.lib.dir}/nunit.framework.dll"/>
 			</references>
 			<resources prefix="Spring.Data.NHibernate4.NestedTxSuspension.Integration.Tests" dynamicprefix="true" failonempty="true">
 				<include name="**/*.xml" />
